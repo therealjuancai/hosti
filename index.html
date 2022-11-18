@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre alpha(1.0)</title>
+    <link rel="stylesheet" href="css\bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js\codex.js"></script>
+</head>
+<body>>
+      <div id="Logo">
+          <img src="IMG/LOGO.png" alt="Logo" width="17%" height="17%">
+      </div>
+      </nav>
+      <div class="container">
+        <div class="row">
+          <div class="col align-self-start">
+            <canvas id="dibujo" width="300" height="300" style="border: 1px solid rgba(255, 255, 255, 0.589)">
+            </canvas>
+            Capacitor:<canvas id="cap" width="300" height="300" style="border: 1px solid rgba(255, 255, 255, 0.589)">
+            </canvas>
+            <button type="button" class="btn btn-outline-danger" onclick="limp()">   Limpiar   </button>
+          </div>
+          <div class="col align-self-start ">
+            <br><br><br>
+            <p>ε0 =  8.854187817e-12 F/m</p>
+            <p id="area">Area(A) = 0.0 m^2</p>
+            <p id="separacion" class="cuadrado">Separación(d) = 0.0 m</p>
+            <p id="permitividad" class="cuadrado">Permitividad del Material(k) = 0.0</p>
+            <br>
+            <p>(k*ε0*A)/d</p>
+
+            <br>
+            <p id="capacitancia">Capacitancia = 0.0 F</p>
+          </div>
+          <div class="col align-content-md-end" id="menu">
+            <br>
+            <h2 class="mod">DISEÑO</h2>
+            <br>
+            <button type="button" class="btn btn-outline-light" onclick="rect()">Rectangulo</button>
+            <button type="button" class="btn btn-outline-light" onclick="cir()">Circulo</button>
+            <form class="row g-3">
+              <div class="row g-3 filtro" id="rect">
+                <p>Placa: </p>
+                <div class="col-auto">
+                  <label class="visually-hidden">Largo</label>
+                  <input type="number" class="form-control" id="Largo" placeholder="Largo (m)">
+                </div>
+                <div class="col-auto">
+                  <label class="visually-hidden">Ancho</label>
+                  <input type="number" class="form-control" id="Ancho" placeholder="Ancho (m)">
+                </div>
+              </div>
+              <div class="row g-3 filtro" id="cir">
+                <p>Placa: </p>
+                <div class="col-auto">
+                  <label class="visually-hidden">Radio</label>
+                  <input type="number" class="form-control" id="Radio" placeholder="Radio (m)">
+                </div>
+              </div>
+              <p>Separación:</p>
+              <div class="col-auto">
+                <label class="visually-hidden">Distancia</label>
+                <input type="number" class="form-control" id="Distancia" placeholder="Distancia (m)">
+              </div>
+              <p>Dielectrico: </p>
+              <div>
+                <form class="d-flex" role="search">
+                  <input class="form-control me-2" id="buscador" type="search" placeholder="Material" aria-label="Material">
+                </form>
+              </div>
+              <br>
+            <div class="card" id="Aire" style="width: 7rem;" onclick="draw(), drawCap(), draw(), drawCap(), calcular(mat=1.0)">
+              <img src="IMG/MATERIAL/AIRE.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Aire y gases</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=4.6)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/ACEITE DE RESINO.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Aceite de recino</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=2.7)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/ACEITE-MINERAl.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Aceite mineral</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=80.0)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/AGUA DESTILADA.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Agua destilada</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=30.0)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/ALCOHOL.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Alcohol</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=5.0)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/BAKELITA.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Bakelita</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=6.6)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/NO HAY.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Calán</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=6.5)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/NO HAY.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Calit</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=2.9)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/CAUCHO.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Caucho</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=4.1)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/CELULOIDE.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Celuloide</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=1.8)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/CERA.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Cera</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=50.0)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/NO HAY.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Codensa</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=7.6)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/CRISTAL.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Cristal</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=4.5)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/CUARZO.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Cuarzo</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=2.8)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/EBONITA.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Ebonita</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=9.9)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/FLINT.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Flint</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=3.1)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/GOMA.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Goma laca</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=2.5)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/NO HAY.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Ipertrolitul</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=8.0)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/MARMOL.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Marmol</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=8.0)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/MICA.jpeg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Mica</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=8.0)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/MICALEX.jpeg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Micalex</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=3.7)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/PAPEL PARAFINADO.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Papel parafinado</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=2.1)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/PARAFINA.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Parafina</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=6.8)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/PORCELANA.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Porcelana</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=2.5)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/RESINA.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Resina</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=2.2)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/VASELINA.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Vaselina</p>
+              </div>
+            </div>
+            <div class="card" onclick="draw(), drawCap(), calcular(mat=10.0)" style="width: 7rem;">
+              <img src="IMG/MATERIAL/VIDRIO.jpeg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Vidrio</p>
+              </div>
+            </div>
+            .
+          </div>
+        </div>
+        <br>
+      </div>
+</body>
+</html>
